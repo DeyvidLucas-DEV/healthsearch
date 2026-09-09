@@ -1,0 +1,12 @@
+streamlit>=1.40
+pandas>=2.0
+numpy>=1.26
+rank_bm25>=0.2.2
+
+# Fase 3 — embeddings densos reais. Opcional: sem estes pacotes o app cai
+# automaticamente na simulação vetorial documentada (TF-IDF + expansão clínica).
+sentence-transformers>=3.0
+
+# Apenas para gerar o relatório técnico em PDF
+reportlab>=4.0
+matplotlib>=3.8

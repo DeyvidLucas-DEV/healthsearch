@@ -1,0 +1,14 @@
+# Ambiente virtual (contém PyTorch, ~2 GB — nunca versionar)
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Cache de modelos HuggingFace
+.cache/
+
+# macOS
+.DS_Store
