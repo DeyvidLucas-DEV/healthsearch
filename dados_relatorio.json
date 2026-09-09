@@ -1,0 +1,52 @@
+{
+  "s_bm": [
+    0.0,
+    1.3584010167752174,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "s_sem": [
+    0.3301507228032079,
+    0.24484328366272567,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "s_rrf": [
+    0.00819672131147541,
+    0.01626123744050767,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "r_bm": [
+    Infinity,
+    1.0,
+    Infinity,
+    Infinity,
+    Infinity,
+    Infinity
+  ],
+  "r_sem": [
+    1.0,
+    2.0,
+    Infinity,
+    Infinity,
+    Infinity,
+    Infinity
+  ],
+  "r_rrf": [
+    2.0,
+    1.0,
+    Infinity,
+    Infinity,
+    Infinity,
+    Infinity
+  ],
+  "modo": "Simula\u00e7\u00e3o vetorial (TF-IDF + expans\u00e3o cl\u00ednica)",
+  "consulta": "infarto"
+}

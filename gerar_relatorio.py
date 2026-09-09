@@ -27,6 +27,14 @@ from reportlab.platypus import (PageBreak, Paragraph, SimpleDocTemplate, Spacer,
 # ----------------------------------------------------------------------------
 # Importa a lógica do app sem subir o Streamlit (stub com cache real)
 # ----------------------------------------------------------------------------
+# O healthsearch_app.py importa pandas para a interface, mas o relatório só usa
+# as funções de busca. Stubamos o pandas para não pagar o custo do import — que
+# nesta máquina é significativo — sem alterar o comportamento dos motores.
+if "pandas" not in sys.modules:
+    _pd = types.ModuleType("pandas")
+    _pd.DataFrame = object
+    sys.modules["pandas"] = _pd
+
 _st = types.ModuleType("streamlit")
 _st.set_page_config = lambda **k: None
 _st.cache_resource = lambda *a, **k: (lambda f: functools.lru_cache(maxsize=None)(f))
@@ -240,7 +248,7 @@ fx.append(tabela_simples([
      "minúsculas, remoção de acentos (NFKD), regex [a-z0-9]+, stopwords PT, stemming"],
     ["2", "Motor léxico",
      "tokens → vetor de scores",
-     "Okapi BM25 (rank_bm25) com k₁ e b ajustáveis por slider"],
+     "Okapi BM25 (rank_bm25) com k1 e b ajustáveis por slider"],
     ["3", "Motor semântico",
      "texto → vetor 384-D → score",
      "paraphrase-multilingual-MiniLM-L12-v2 + similaridade de cosseno"],
@@ -264,8 +272,8 @@ fx.append(p(
 
 fx.append(p("3. Fase 2 — Motor léxico Okapi BM25", H1))
 fx.append(p(
-    "O índice é reconstruído a cada alteração de slider, pois k₁ e b não reordenam um "
-    "ranking pronto: eles alteram a própria função de pontuação. O parâmetro <b>k₁</b> "
+    "O índice é reconstruído a cada alteração de slider, pois k<sub>1</sub> e b não reordenam um "
+    "ranking pronto: eles alteram a própria função de pontuação. O parâmetro <b>k<sub>1</sub></b> "
     "controla a saturação da frequência do termo (a 1ª ocorrência vale muito, a 8ª quase "
     "nada) e <b>b</b> controla a penalização por comprimento do documento, via a razão "
     "|D|/avgdl. Com b = 0 o tamanho é ignorado; com b = 1 a penalização é máxima."))
@@ -300,7 +308,7 @@ fx.append(PageBreak())
 # ------------------------------- PÁGINA 2 -----------------------------------
 fx.append(p("6. Resultado experimental — gráfico de comparação de ranks", H1))
 fx.append(p(
-    f'Consulta de estudo: <b>&ldquo;{CONSULTA_ESTUDO}&rdquo;</b> · k₁ = {K1} · b = {B} · '
+    f'Consulta de estudo: <b>&ldquo;{CONSULTA_ESTUDO}&rdquo;</b> · k<sub>1</sub> = {K1} · b = {B} · '
     f'α = {ALFA} · modo semântico: {modo}.'))
 fx.append(construir_grafico())
 
@@ -309,7 +317,7 @@ linhas = [["ID", "Diretriz", "Score BM25", "Rank BM25", "Cosseno", "Rank Sem.", 
 for i in np.argsort(r_rrf):
     fmt = lambda r: "—" if np.isinf(r) else str(int(r))
     linhas.append([
-        CORPUS[i]["id"], CORPUS[i]["titulo"][:26],
+        CORPUS[i]["id"], CORPUS[i]["titulo"][:30],
         f"{s_bm[i]:.4f}", fmt(r_bm[i]),
         f"{s_sem[i]:.4f}", fmt(r_sem[i]),
         f"{s_rrf[i]:.5f}", fmt(r_rrf[i]),
